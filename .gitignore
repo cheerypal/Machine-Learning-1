@@ -1,1 +1,5 @@
+./idea
+./randomized_data
+./__pycache__
+./training_data
 *.csv
