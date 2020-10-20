@@ -1,30 +1,29 @@
-import sklearn as sk, numpy, pandas as pd
-import os, csv, math
-
+# Import train_test_split function
+import numpy
+import pandas
+from sklearn import metrics
+from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 
-x_set = pd.read_csv("randomized_data/x_train_gr_smpl_randomized.csv", header=None)
-s = pd.DataFrame(x_set)
-length = len(s.index)
+# Read training data and associated labels
+data = pandas.read_csv("randomized_data/x_train_gr_smpl_randomized.csv")
+labels = pandas.read_csv("randomized_data/y_train_smpl_randomized.csv")
 
-# training_X_Set = x_set[1:math.floor(0.7 * length)+1].astype("float")/255
-# = x_set[math.floor(0.7 * length)+1:].astype("float")/255
-training_X_Set = x_set[1:math.floor(0.7 * length) + 1]
-test_X_Set = x_set[math.floor(0.7 * length) + 1:]
-# print(training_X_Set)
-# print(test_X_Set)
+# Change the shape of labels to a 1d array, since it is a column-vector
+labels = numpy.ravel(labels)
 
+# 30/70 split testing/training
+X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=109)
 
-y_set = pd.read_csv("randomized_data/y_train_smpl_randomized.csv", header=None)
-training_Y_Set = y_set[1:math.floor(0.7 * length) + 1]
-test_Y_Set = y_set[math.floor(0.7 * length) + 1:]
-# print(training_Y_Set)
-# print(test_Y_Set)
+# Declare Multinomial Naive Bayes model
+naive_bayes = MultinomialNB()
 
-print(training_Y_Set[0])
+# Train the model using the training sets
+print("Training Naive Bayes classifier.")
+naive_bayes.fit(X_train, y_train)
 
-naive_bayes_X_set = MultinomialNB()
-naive_bayes_X_set.fit(training_X_Set, training_Y_Set[0])
+# Predict the response for test dataset
+y_prediction = naive_bayes.predict(X_test)
 
-print(naive_bayes_X_set.predict(test_X_Set))
-print(naive_bayes_X_set.score(test_X_Set, test_Y_Set))
+# Model Accuracy - how often is the classifier correct?
+print("Accuracy:", metrics.accuracy_score(y_test, y_prediction))

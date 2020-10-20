@@ -1,4 +1,5 @@
-import random, os
+import os
+import random
 
 
 def seed():
