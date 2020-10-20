@@ -1,7 +1,9 @@
 import random, os
 
+
 def seed():
     return 0.1
+
 
 def randomize_data():
     if os.path.exists("randomized_data"):
