@@ -4,10 +4,13 @@ import pandas
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
+from sklearn import preprocessing
 
 # Read training data and associated labels
 data = pandas.read_csv("randomized_data/x_train_gr_smpl_randomized.csv")
 labels = pandas.read_csv("randomized_data/y_train_smpl_randomized.csv")
+
+data = preprocessing.normalize(data)
 
 # Change the shape of labels to a 1d array, since it is a column-vector
 labels = numpy.ravel(labels)
