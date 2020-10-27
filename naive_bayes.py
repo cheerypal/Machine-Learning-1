@@ -6,28 +6,43 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
 from sklearn import preprocessing
 
-# Read training data and associated labels
-data = pandas.read_csv("randomized_data/x_train_gr_smpl_randomized.csv")
-labels = pandas.read_csv("randomized_data/y_train_smpl_randomized.csv")
 
-# Change the shape of labels to a 1d array, since it is a column-vector
-labels = numpy.ravel(labels)
+def naive_bayes(pixelFile):
 
-# 30/70 split testing/training
-X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=109)
+    # Read training data and associated labels
+    data = pandas.read_csv(pixelFile)
 
-# Declare Multinomial Naive Bayes model
-naive_bayes = MultinomialNB()
+    labels = pandas.read_csv("randomized_data/y_train_smpl_randomized.csv")
 
-# Train the model using the training sets
-print("Training Naive Bayes classifier.")
-naive_bayes.fit(X_train, y_train)
+    # Change the shape of labels to a 1d array, since it is a column-vector
+    labels = numpy.ravel(labels)
 
-# Predict the response for test dataset
-y_prediction = naive_bayes.predict(X_test)
+    # 30/70 split testing/training
+    X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.3, random_state=109)
 
-# Model Accuracy - how often is the classifier correct?
-print("Accuracy:", metrics.accuracy_score(y_test, y_prediction))
+    # Declare Multinomial Naive Bayes model
+    naive_bayes = MultinomialNB()
 
-# Confusion Matrix
-print("Confusion Matrix:", metrics.confusion_matrix(y_test, y_prediction))
+    # Train the model using the training sets
+    print("Training Naive Bayes classifier.")
+    naive_bayes.fit(X_train, y_train)
+
+    # Predict the response for test dataset
+    y_prediction = naive_bayes.predict(X_test)
+
+    # Model Accuracy - how often is the classifier correct?
+    print("Accuracy:", metrics.accuracy_score(y_test, y_prediction))
+
+    # Confusion Matrix
+    print("Confusion Matrix:", metrics.confusion_matrix(y_test, y_prediction))
+
+
+rand_test_data = "randomized_data/x_train_gr_smpl_randomized.csv"
+top5Pixels = "top_pixels/top5pixels.csv"
+top10Pixels = "top_pixels/top10pixels.csv"
+top20Pixels = "top_pixels/top20pixels.csv"
+
+naive_bayes(rand_test_data)
+naive_bayes(top5Pixels)
+naive_bayes(top10Pixels)
+naive_bayes(top20Pixels)

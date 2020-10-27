@@ -1,3 +1,5 @@
+import os
+
 import pandas
 
 # Array that contains the headers for the class columns
@@ -20,21 +22,43 @@ def init_correlation():
     print(data)
     # Get the absolute correlation values of the data
     correlation = abs(data.corr())
-    return correlation
+    return correlation, data
 
 
 # run correlation on individual classes to find the best number of pixels
 def runCorrelation(pixels):
+    if os.path.exists("top_pixels"):
+        print("Directory already exists")
+    else:
+        os.mkdir("top_pixels")
+
+    allPixel = []
     # loop through all ten classifier columns to find the best 10 pixels and print the arrays containing them.
     for x in range(0, 10):
         sortedCorr = corr[ARR[x]][0:2304].sort_values(ascending=False)
         sortedCorr = sortedCorr[0:pixels].index
+        pixARR = sortedCorr.values.tolist()
         print("#### " + ARR[x] + " ####")
+        pandas.array(sortedCorr)
+        sortedPix = []
         print(pandas.array(sortedCorr))
+        for i in pixARR:
+            item = int(i)
+            sortedPix.append(item)
+
+        sortedPix = sorted(sortedPix)
+        for i in sortedPix:
+            allPixel.append(i)
+
+    print(allPixel)
+    print(len(allPixel))
+    z = data[[str(boi) for boi in allPixel]]
+    z.to_csv("top_pixels/top" + str(pixels) + "pixels.csv", index=False)
+    print(z)
 
 
 # start
-corr = init_correlation()
+corr, data = init_correlation()
 print("#### Top 5 Pixels ####")
 runCorrelation(5)
 
