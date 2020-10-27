@@ -10,8 +10,6 @@ from sklearn import preprocessing
 data = pandas.read_csv("randomized_data/x_train_gr_smpl_randomized.csv")
 labels = pandas.read_csv("randomized_data/y_train_smpl_randomized.csv")
 
-data = preprocessing.normalize(data)
-
 # Change the shape of labels to a 1d array, since it is a column-vector
 labels = numpy.ravel(labels)
 
@@ -30,3 +28,6 @@ y_prediction = naive_bayes.predict(X_test)
 
 # Model Accuracy - how often is the classifier correct?
 print("Accuracy:", metrics.accuracy_score(y_test, y_prediction))
+
+# Confusion Matrix
+print("Confusion Matrix:", metrics.confusion_matrix(y_test, y_prediction))
