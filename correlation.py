@@ -21,12 +21,13 @@ def init_correlation():
     # print full data table with all the classifier files were concatenated
     print(data)
     # Get the absolute correlation values of the data
+    print("Correlating Data .......")
     correlation = abs(data.corr())
     return correlation, data
 
 
 # run correlation on individual classes to find the best number of pixels
-def runCorrelation(pixels):
+def runCorrelation(pixels, corr, data):
     if os.path.exists("top_pixels"):
         print("Directory already exists")
     else:
@@ -54,16 +55,6 @@ def runCorrelation(pixels):
     print(len(allPixel))
     z = data[[str(boi) for boi in allPixel]]
     z.to_csv("top_pixels/top" + str(pixels) + "pixels.csv", index=False)
+    z.to_csv("top_pixels/top" + str(pixels) + "pixels_weka.csv", index=False, header=[str(allPixel[i]) + "-" + str(i) for i in range(len(allPixel))])
     print(z)
 
-
-# start
-corr, data = init_correlation()
-print("#### Top 5 Pixels ####")
-runCorrelation(5)
-
-print("#### Top 10 Pixels ####")
-runCorrelation(10)
-
-print("#### Top 20 Pixels ####")
-runCorrelation(20)

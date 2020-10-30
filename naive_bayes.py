@@ -7,7 +7,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn import preprocessing
 
 
-def naive_bayes(pixelFile):
+def naive_bayes_fun(pixelFile):
 
     # Read training data and associated labels
     data = pandas.read_csv(pixelFile)
@@ -37,12 +37,3 @@ def naive_bayes(pixelFile):
     print("Confusion Matrix:", metrics.confusion_matrix(y_test, y_prediction))
 
 
-rand_test_data = "randomized_data/x_train_gr_smpl_randomized.csv"
-top5Pixels = "top_pixels/top5pixels.csv"
-top10Pixels = "top_pixels/top10pixels.csv"
-top20Pixels = "top_pixels/top20pixels.csv"
-
-naive_bayes(rand_test_data)
-naive_bayes(top5Pixels)
-naive_bayes(top10Pixels)
-naive_bayes(top20Pixels)
