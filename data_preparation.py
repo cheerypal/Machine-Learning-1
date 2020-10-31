@@ -35,7 +35,3 @@ def addClassifier(pixel):
     file.to_csv("top_pixels/top" + str(pixel) + "pixels_weka.csv",  index=False)
 
 
-addClassifier(5)
-addClassifier(10)
-addClassifier(20)
-
