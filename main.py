@@ -31,5 +31,9 @@ naive_bayes.naive_bayes_fun(top5Pixels)
 naive_bayes.naive_bayes_fun(top10Pixels)
 naive_bayes.naive_bayes_fun(top20Pixels)
 
-
+# q7
+print("\n### Add classifier to the top pixel files ###\n")
+data_preparation.addClassifier(5)
+data_preparation.addClassifier(10)
+data_preparation.addClassifier(20)
 
