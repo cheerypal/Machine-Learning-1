@@ -15,7 +15,7 @@ def randomize_data():
     for filename in os.listdir("training_data"):
         print("Randomizing " + filename)
         file = open("training_data/" + filename, "r")
-        training_data = file.readlines()git a
+        training_data = file.readlines()
         header = training_data[0]
         data = training_data[1:]
         random.shuffle(data, seed)
