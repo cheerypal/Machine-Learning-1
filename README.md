@@ -16,13 +16,13 @@ Classifiers being used on the datasets from question 5 (all on the training sets
 | Top5Pixels | K2 (2 Parent) | 97.6161% |
 | Top5Pixels | TAN | 99.7317% |
 | Top5Pixels | HillClimber | 68.2353% |
-| Top10Pixels | K2 (1 Parent) | |
-| Top10Pixels | K2 (2 Parent) | |
-| Top10Pixels | TAN | |
-| Top10Pixels | HillClimber | |
+| Top10Pixels | K2 (1 Parent) | 68.1321% |
+| Top10Pixels | K2 (2 Parent) | 97.1414% |
+| Top10Pixels | TAN | 99.1331% |
+| Top10Pixels | HillClimber | 68.1321% |
 | Top20Pixels | K2 (1 Parent) | 67.6161% |
-| Top20Pixels | K2 (2 Parent) | |
-| Top20Pixels | TAN | |
-| Top20Pixels | HillClimber | |
+| Top20Pixels | K2 (2 Parent) | n/a |
+| Top20Pixels | TAN | n/a |
+| Top20Pixels | HillClimber | n/a |
 
 
