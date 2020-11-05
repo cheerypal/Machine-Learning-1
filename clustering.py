@@ -16,7 +16,7 @@ def cluster_initializer(file):
     principalComponents = pca.fit_transform(x)
     principalDf = pandas.DataFrame(data=principalComponents, columns=['principal component 1', "principal component 2"])
     finalDf = pandas.concat([principalDf, labels], axis=1)
-    return principalDf, finalDf, unaltered, labels
+    return principalDf, unaltered, labels, finalDf
 
 
 def k_means_cluster(labels, principalDf):
@@ -25,14 +25,12 @@ def k_means_cluster(labels, principalDf):
 
     accuracy = sklearn.metrics.accuracy_score(k.labels_, labels)
     print(accuracy)
-
+    colors = ["blue", "orange", "green", "red", "purple",
+              "brown", "pink", "grey", "yellow", "cyan"]
     for entry, oh in zip(principalDf.values, k.labels_):
-        # colors = [blue, orange, green, red, purple, brown, pink, grey, yellow, cyan]
-        colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
-                  '#17becf']
         plt.scatter(entry[0], entry[1], s=1, c=colors[oh], label=colors[oh])
 
     plt.suptitle("KMeans Cluster")
-    # plt.legend()
+    plt.gca().legend(colors)
     plt.show()
 
