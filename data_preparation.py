@@ -24,6 +24,7 @@ def randomize_data():
             for line in data:
                 target.write(line)
 
+
 def addClassifier(pixel):
     file = pandas.read_csv("top_pixels/top"+str(pixel)+"pixels_weka.csv")
     labels = pandas.read_csv("randomized_data/y_train_smpl_randomized.csv")

@@ -1,35 +1,26 @@
 import matplotlib.pyplot as plt
-import pandas
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
 from sklearn.metrics import accuracy_score
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.mixture import GaussianMixture
 from sklearn.cluster import KMeans
 from sklearn.cluster import Birch
-
-# import the data
-x = pandas.read_csv("randomized_data/x_train_gr_smpl_randomized.csv")
-ooh = x
-y = pandas.read_csv("randomized_data/y_train_smpl_randomized.csv")
-x = StandardScaler().fit_transform(x)
+import clustering
 
 
-def pcaLimiting(data):
-    pca = PCA(n_components=2)
-    principalComponents = pca.fit_transform(data)
-    principalDf = pandas.DataFrame(data=principalComponents, columns=['principal component 1', "principal component 2"])
-    finalDf = pandas.concat([principalDf, y], axis=1)
-    return principalDf, finalDf
+rand_test_data = "randomized_data/x_train_gr_smpl_randomized.csv"
+rand_label_file = "randomized_data/y_train_smpl_randomized.csv"
+top5Pixels = "top_pixels/top5pixels.csv"
+top10Pixels = "top_pixels/top10pixels.csv"
+top20Pixels = "top_pixels/top20pixels.csv"
+
 
 #############################################################
-
-
-def aggloCluster(data, principalDf):
-    globb = AgglomerativeClustering(n_clusters=10).fit(data)
+def aggloCluster(labels, principalDf):
+    print("Agglomerative is starting ....")
+    globb = AgglomerativeClustering(n_clusters=10).fit(principalDf)
     print("globb!")
     print(globb.labels_)
-    print(accuracy_score(globb.labels_, y))
+    print(accuracy_score(globb.labels_, labels))
 
     for entry, oh in zip(principalDf.values, globb.labels_):
         colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
@@ -42,11 +33,11 @@ def aggloCluster(data, principalDf):
 #############################################################
 
 
-def gaussianCluster(data, principalDf):
+def gaussianCluster(labels, principalDf):
     print("Gaussian is starting ....")
-    gaus = GaussianMixture(n_components=10).fit_predict(data)
+    gaus = GaussianMixture(n_components=10).fit_predict(principalDf)
     print(gaus)
-    print(accuracy_score(gaus, y))
+    print(accuracy_score(gaus, labels))
 
     for entry, oh in zip(principalDf.values, gaus):
         colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
@@ -58,11 +49,11 @@ def gaussianCluster(data, principalDf):
 #############################################################
 
 
-def EMCluster(data, principalDf):
+def EMCluster(labels, principalDf):
     print("EM starting .....")
-    k = KMeans(n_clusters=10, algorithm="full", random_state=1).fit(data)
+    k = KMeans(n_clusters=10, algorithm="full", random_state=1).fit(principalDf)
     print(k.labels_)
-    print(accuracy_score(k.labels_,y))
+    print(accuracy_score(k.labels_, labels))
 
     for entry, oh in zip(principalDf.values, k.labels_):
         colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
@@ -74,12 +65,12 @@ def EMCluster(data, principalDf):
 ###########################################################
 
 
-def birchCluster(data, principalDf):
+def birchCluster(labels, principalDf):
     print("Birch starting .....")
-    brch = Birch(n_clusters=10).fit(data)
+    brch = Birch(n_clusters=10).fit(principalDf)
     print(brch.labels_)
     print(brch.subcluster_labels_)
-    print(accuracy_score(brch.labels_, y))
+    print(accuracy_score(brch.labels_, labels))
 
     for entry, oh in zip(principalDf.values, brch.labels_):
         colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',

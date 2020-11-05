@@ -1,12 +1,15 @@
 import data_preparation
 import naive_bayes
 import correlation
+import clustering
+import hs_clustering
 
 # datasets
 rand_test_data = "randomized_data/x_train_gr_smpl_randomized.csv"
 top5Pixels = "top_pixels/top5pixels.csv"
 top10Pixels = "top_pixels/top10pixels.csv"
 top20Pixels = "top_pixels/top20pixels.csv"
+rand_label_file = "randomized_data/y_train_smpl_randomized.csv"
 
 # Randomize training training_data - q1.
 data_preparation.randomize_data()
@@ -36,4 +39,18 @@ print("\n### Add classifier to the top pixel files ###\n")
 data_preparation.addClassifier(5)
 data_preparation.addClassifier(10)
 data_preparation.addClassifier(20)
+
+
+# initialize cluster section using pca
+
+principalDf, finalDf, unaltered = clustering.cluster_initializer(rand_test_data, rand_label_file)
+
+# q9
+# clustering.k_means_cluster(labels, principalDf)
+
+# q11
+hs_clustering.aggloCluster(rand_label_file, principalDf)
+# hs_clustering.EMCluster(rand_label_file, principalDf)
+# hs_clustering.gaussianCluster(rand_label_file, principalDf)
+# hs_clustering.birchCluster(rand_label_file, principalDf)
 
