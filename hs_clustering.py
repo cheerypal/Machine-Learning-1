@@ -27,7 +27,7 @@ def aggloCluster(labels, principalDf):
         plt.scatter(entry[0], entry[1], s=1, c=colors[oh])
 
     plt.suptitle("Agglomerative Cluster")
-    plt.gca().legend(colors)
+
     plt.show()
 
 
@@ -45,7 +45,7 @@ def gaussianCluster(labels, principalDf):
         plt.scatter(entry[0], entry[1], s=1, c=colors[oh])
 
     plt.suptitle("Gaussian Mixture Cluster")
-    plt.gca().legend(colors)
+
     plt.show()
 
 #############################################################
@@ -62,7 +62,7 @@ def EMCluster(labels, principalDf):
         plt.scatter(entry[0], entry[1], s=2, c=colors[oh])
 
     plt.suptitle("EM Cluster")
-    plt.gca().legend(colors)
+
     plt.show()
 
 ###########################################################
@@ -80,7 +80,7 @@ def birchCluster(labels, principalDf):
         plt.scatter(entry[0], entry[1], s=2, c=colors[oh])
 
     plt.suptitle("Birch Cluster")
-    plt.gca().legend(colors)
+
     plt.show()
 
 

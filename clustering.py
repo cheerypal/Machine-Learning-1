@@ -31,6 +31,5 @@ def k_means_cluster(labels, principalDf):
         plt.scatter(entry[0], entry[1], s=1, c=colors[oh], label=colors[oh])
 
     plt.suptitle("KMeans Cluster")
-    plt.gca().legend(colors)
     plt.show()
 
