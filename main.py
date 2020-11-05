@@ -42,15 +42,14 @@ data_preparation.addClassifier(20)
 
 
 # initialize cluster section using pca
-
-principalDf, finalDf, unaltered = clustering.cluster_initializer(rand_test_data, rand_label_file)
+principalDf, finalDf, unaltered = clustering.cluster_initializer(rand_test_data)
 
 # q9
 # clustering.k_means_cluster(labels, principalDf)
 
 # q11
-hs_clustering.aggloCluster(rand_label_file, principalDf)
-# hs_clustering.EMCluster(rand_label_file, principalDf)
-# hs_clustering.gaussianCluster(rand_label_file, principalDf)
-# hs_clustering.birchCluster(rand_label_file, principalDf)
+hs_clustering.aggloCluster(principalDf)
+# hs_clustering.EMCluster(principalDf)
+# hs_clustering.gaussianCluster(principalDf)
+# hs_clustering.birchCluster(principalDf)
 

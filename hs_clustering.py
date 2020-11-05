@@ -21,12 +21,13 @@ def aggloCluster(labels, principalDf):
     print("globb!")
     print(globb.labels_)
     print(accuracy_score(globb.labels_, labels))
-
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
+              '#17becf']
     for entry, oh in zip(principalDf.values, globb.labels_):
-        colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
-                  '#17becf']
         plt.scatter(entry[0], entry[1], s=1, c=colors[oh])
 
+    plt.suptitle("Agglomerative Cluster")
+    plt.gca().legend(colors)
     plt.show()
 
 
@@ -38,12 +39,13 @@ def gaussianCluster(labels, principalDf):
     gaus = GaussianMixture(n_components=10).fit_predict(principalDf)
     print(gaus)
     print(accuracy_score(gaus, labels))
-
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
+              '#17becf']
     for entry, oh in zip(principalDf.values, gaus):
-        colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
-                  '#17becf']
         plt.scatter(entry[0], entry[1], s=1, c=colors[oh])
 
+    plt.suptitle("Gaussian Mixture Cluster")
+    plt.gca().legend(colors)
     plt.show()
 
 #############################################################
@@ -54,12 +56,13 @@ def EMCluster(labels, principalDf):
     k = KMeans(n_clusters=10, algorithm="full", random_state=1).fit(principalDf)
     print(k.labels_)
     print(accuracy_score(k.labels_, labels))
-
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
+              '#17becf']
     for entry, oh in zip(principalDf.values, k.labels_):
-        colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
-                  '#17becf']
-        plt.scatter(entry[0], entry[1], s=1, c=colors[oh])
+        plt.scatter(entry[0], entry[1], s=2, c=colors[oh])
 
+    plt.suptitle("EM Cluster")
+    plt.gca().legend(colors)
     plt.show()
 
 ###########################################################
@@ -71,12 +74,17 @@ def birchCluster(labels, principalDf):
     print(brch.labels_)
     print(brch.subcluster_labels_)
     print(accuracy_score(brch.labels_, labels))
-
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
+              '#17becf']
     for entry, oh in zip(principalDf.values, brch.labels_):
-        colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
-                  '#17becf']
-        plt.scatter(entry[0], entry[1], s=1, c=colors[oh])
+        plt.scatter(entry[0], entry[1], s=2, c=colors[oh])
 
+    plt.suptitle("Birch Cluster")
+    plt.gca().legend(colors)
     plt.show()
 
+
+principalDf, finalDf, unaltered, labels = clustering.cluster_initializer(top5Pixels)
+
+birchCluster(labels, principalDf)
 

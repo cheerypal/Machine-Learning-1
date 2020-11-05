@@ -7,16 +7,16 @@ from sklearn.decomposition import PCA
 
 
 # import the data
-def cluster_initializer(file, label_file):
+def cluster_initializer(file):
     x = pandas.read_csv(file)
     unaltered = x
-    labels = pandas.read_csv(label_file)
+    labels = pandas.read_csv("randomized_data/y_train_smpl_randomized.csv")
     x = StandardScaler().fit_transform(x)
     pca = PCA(n_components=2)
     principalComponents = pca.fit_transform(x)
     principalDf = pandas.DataFrame(data=principalComponents, columns=['principal component 1', "principal component 2"])
     finalDf = pandas.concat([principalDf, labels], axis=1)
-    return principalDf, finalDf, unaltered
+    return principalDf, finalDf, unaltered, labels
 
 
 def k_means_cluster(labels, principalDf):
@@ -32,7 +32,7 @@ def k_means_cluster(labels, principalDf):
                   '#17becf']
         plt.scatter(entry[0], entry[1], s=1, c=colors[oh], label=colors[oh])
 
-
+    plt.suptitle("KMeans Cluster")
     # plt.legend()
     plt.show()
 
