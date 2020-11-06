@@ -35,7 +35,7 @@ naive_bayes.naive_bayes_fun(top10Pixels)
 naive_bayes.naive_bayes_fun(top20Pixels)
 
 
-# q7
+# q7 - Generate weka ready files.
 print("\n### Add classifier to the top pixel files ###\n")
 data_preparation.addClassifier(5)
 data_preparation.addClassifier(10)
@@ -43,14 +43,18 @@ data_preparation.addClassifier(20)
 
 
 # initialize cluster section using pca
-principalDf, unaltered, labels, finalDf = clustering.cluster_initializer(rand_test_data)
+print("\n### Create PCA reduced files ###\n")
+pca_file, unaltered, labels, full_pca_file = clustering.cluster_initializer(rand_test_data)
 
-# q9
-clustering.k_means_cluster(labels, principalDf, True)
+# q9 - KMeans cluster with optimal cluster finder
+print("\n### KMeans Clusters with KMeans with Optimal Cluster Finder ###\n")
+clustering.k_means_cluster(labels, pca_file, True)
 
-# q11
-hs_clustering.aggloCluster(labels, finalDf)
-hs_clustering.EMCluster(labels, principalDf, True)
-hs_clustering.gaussianCluster(labels, principalDf)
-hs_clustering.birchCluster(labels, principalDf)
+# q11 - Cluster Algorithms Used
+print("\n### Hard and Soft Clustering Techniques ###\n")
+hs_clustering.aggloCluster(labels, full_pca_file)
+# EM cluster with optimal clustering
+hs_clustering.EMCluster(labels, pca_file, True)
+hs_clustering.gaussianCluster(labels, pca_file)
+hs_clustering.birchCluster(labels, pca_file)
 

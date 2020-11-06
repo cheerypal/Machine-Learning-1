@@ -8,7 +8,7 @@ from sklearn.cluster import KMeans
 from sklearn.cluster import Birch
 import clustering
 
-
+# Files for use if testing is required in the file
 rand_test_data = "randomized_data/x_train_gr_smpl_randomized.csv"
 rand_label_file = "randomized_data/y_train_smpl_randomized.csv"
 top5Pixels = "top_pixels/top5pixels.csv"
@@ -18,15 +18,27 @@ top20Pixels = "top_pixels/top20pixels.csv"
 
 #############################################################
 
-def aggloCluster(labels, principalDf):
+
+def aggloCluster(labels, pca_file):
+    """
+    Function that outputs a scatter plot of the Agglomerative Cluster
+
+    params:
+        labels : file
+            The classifier for the dataset
+        pca_file : file
+            The dataset
+    """
     print("Agglomerative is starting ....")
-    globb = AgglomerativeClustering(n_clusters=10).fit(principalDf)
+    agglo = AgglomerativeClustering(n_clusters=10).fit(pca_file)
     print("globb!")
-    print(globb.labels_)
-    print(accuracy_score(globb.labels_, labels))
+    # agglo cluster labels.
+    print(agglo.labels_)
+    print(accuracy_score(agglo.labels_, labels))
     colors = ["blue", "orange", "green", "red", "purple",
               "brown", "pink", "grey", "yellow", "cyan"]
-    for entry, oh in zip(principalDf.values, globb.labels_):
+    # populate the scatter plot
+    for entry, oh in zip(pca_file.values, agglo.labels_):
         plt.scatter(entry[0], entry[1], s=1, c=colors[oh])
 
     plt.suptitle("Agglomerative Cluster")
@@ -36,44 +48,75 @@ def aggloCluster(labels, principalDf):
 #############################################################
 
 
-def gaussianCluster(labels, principalDf):
+def gaussianCluster(labels, pca_file):
+    """
+       Function that outputs a scatter plot of the Gaussian Mixture Cluster
+
+       params:
+        labels : file
+            The classifier for the dataset
+        pca_file : file
+            The dataset
+    """
     print("Gaussian is starting ....")
-    gaus = GaussianMixture(n_components=10).fit_predict(principalDf)
+    gaus = GaussianMixture(n_components=10).fit_predict(pca_file)
+    # Print the cluster labels
     print(gaus)
     print(accuracy_score(gaus, labels))
     colors = ["blue", "orange", "green", "red", "purple",
               "brown", "pink", "grey", "yellow", "cyan"]
-    for entry, oh in zip(principalDf.values, gaus):
+    # Plot the scatter plot.
+    for entry, oh in zip(pca_file.values, gaus):
         plt.scatter(entry[0], entry[1], s=1, c=colors[oh])
 
     plt.suptitle("Gaussian Mixture Cluster")
     plt.show()
 
+
 #############################################################
 
 
-def EMCluster(labels, principalDf, optimal):
+def EMCluster(labels, pca_file, optimal):
+    """
+           Function that outputs a scatter plot of the Gaussian Mixture Cluster
+
+           params:
+                labels : file
+                    The classifier for the dataset
+                pca_file : file
+                    The dataset
+                optimal : bool :
+                    Find the optimal number of clusters for EM.
+    """
+
     print("EM starting .....")
+    # List of inertia's
     Sum_of_squared_distances = []
+    # Range of clusters
     K = range(2, 16)
-    # Find the optimal number of
+    # Find the optimal number of clusters
     if optimal:
         for k in K:
-            km = KMeans(n_clusters=k, algorithm="full", random_state=1).fit(principalDf)
+            km = KMeans(n_clusters=k, algorithm="full", random_state=1).fit(pca_file)
             Sum_of_squared_distances.append(math.floor(km.inertia_))
 
+        # Plot the elbow curve for optimal clusters.
         plt.plot(K, Sum_of_squared_distances, 'bx-')
         plt.xlabel('k')
         plt.ylabel('Sum_of_squared_distances')
         plt.title('Elbow Method For Optimal EM k-clusters')
         plt.show()
 
-    km = KMeans(n_clusters=10, algorithm="full", random_state=1).fit(principalDf)
+    # Run the KMeans cluster algorithm using 10 clusters.
+    km = KMeans(n_clusters=10, algorithm="full", random_state=1).fit(pca_file)
+    # Print the cluster labels
     print(km.labels_)
+    # Print the accuracy of cluster labels compared to the classifier labels.
     print(accuracy_score(km.labels_, labels))
     colors = ["blue", "orange", "green", "red", "purple",
               "brown", "pink", "grey", "yellow", "cyan"]
-    for entry, oh in zip(principalDf.values, km.labels_):
+    # Plot the scatter plot
+    for entry, oh in zip(pca_file.values, km.labels_):
         plt.scatter(entry[0], entry[1], s=2, c=colors[oh])
 
     plt.suptitle("EM Cluster")
@@ -82,27 +125,44 @@ def EMCluster(labels, principalDf, optimal):
 ###########################################################
 
 
-def birchCluster(labels, principalDf):
+def birchCluster(labels, pca_file):
+    """
+           Function that outputs a scatter plot of the Gaussian Mixture Cluster
+
+           params:
+                labels : file
+                    The classifier for the dataset
+                pca_file : file
+                    The dataset
+    """
+
     print("Birch starting .....")
-    brch = Birch(n_clusters=10).fit(principalDf)
+    # Run the birch cluster algo
+    brch = Birch(n_clusters=10).fit(pca_file)
+    # Print the birch cluster labels.
     print(brch.labels_)
+    # Print the birch sub-cluster labels.
     print(brch.subcluster_labels_)
+    # Print the accuracy of cluster labels compared to the classifier labels.
     print(accuracy_score(brch.labels_, labels))
     colors = ["blue", "orange", "green", "red", "purple",
               "brown", "pink", "grey", "yellow", "cyan"]
-    for entry, oh in zip(principalDf.values, brch.labels_):
+    # Plot the scatter plot
+    for entry, oh in zip(pca_file.values, brch.labels_):
         plt.scatter(entry[0], entry[1], s=2, c=colors[oh])
 
     plt.suptitle("Birch Cluster")
     plt.show()
 
-"""
-principalDf, unaltered, labels, finalDf = clustering.cluster_initializer(rand_test_data)
 
-birchCluster(labels, principalDf)
-aggloCluster(labels, finalDf)
-EMCluster(labels, principalDf, True)
-gaussianCluster(labels, principalDf)
+"""
+# Used for internal testing
+pca_file, unaltered, labels, full_pca_file = clustering.cluster_initializer(rand_test_data)
+
+birchCluster(labels, pca_file)
+aggloCluster(labels, full_pca_file)
+EMCluster(labels, pca_file, True)
+gaussianCluster(labels, pca_file)
 """
 
 
