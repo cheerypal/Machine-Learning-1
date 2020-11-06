@@ -1,3 +1,5 @@
+import math
+
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
 from sklearn.cluster import AgglomerativeClustering
@@ -15,6 +17,7 @@ top20Pixels = "top_pixels/top20pixels.csv"
 
 
 #############################################################
+
 def aggloCluster(labels, principalDf):
     print("Agglomerative is starting ....")
     globb = AgglomerativeClustering(n_clusters=10).fit(principalDf)
@@ -27,7 +30,6 @@ def aggloCluster(labels, principalDf):
         plt.scatter(entry[0], entry[1], s=1, c=colors[oh])
 
     plt.suptitle("Agglomerative Cluster")
-
     plt.show()
 
 
@@ -45,24 +47,36 @@ def gaussianCluster(labels, principalDf):
         plt.scatter(entry[0], entry[1], s=1, c=colors[oh])
 
     plt.suptitle("Gaussian Mixture Cluster")
-
     plt.show()
 
 #############################################################
 
 
-def EMCluster(labels, principalDf):
+def EMCluster(labels, principalDf, optimal):
     print("EM starting .....")
-    k = KMeans(n_clusters=10, algorithm="full", random_state=1).fit(principalDf)
-    print(k.labels_)
-    print(accuracy_score(k.labels_, labels))
+    Sum_of_squared_distances = []
+    K = range(2, 16)
+    # Find the optimal number of
+    if optimal:
+        for k in K:
+            km = KMeans(n_clusters=k, algorithm="full", random_state=1).fit(principalDf)
+            Sum_of_squared_distances.append(math.floor(km.inertia_))
+
+        plt.plot(K, Sum_of_squared_distances, 'bx-')
+        plt.xlabel('k')
+        plt.ylabel('Sum_of_squared_distances')
+        plt.title('Elbow Method For Optimal EM k-clusters')
+        plt.show()
+
+    km = KMeans(n_clusters=10, algorithm="full", random_state=1).fit(principalDf)
+    print(km.labels_)
+    print(accuracy_score(km.labels_, labels))
     colors = ["blue", "orange", "green", "red", "purple",
               "brown", "pink", "grey", "yellow", "cyan"]
-    for entry, oh in zip(principalDf.values, k.labels_):
+    for entry, oh in zip(principalDf.values, km.labels_):
         plt.scatter(entry[0], entry[1], s=2, c=colors[oh])
 
     plt.suptitle("EM Cluster")
-
     plt.show()
 
 ###########################################################
@@ -80,11 +94,16 @@ def birchCluster(labels, principalDf):
         plt.scatter(entry[0], entry[1], s=2, c=colors[oh])
 
     plt.suptitle("Birch Cluster")
-
     plt.show()
 
-
-principalDf, unaltered, labels = clustering.cluster_initializer(top5Pixels)
+"""
+principalDf, unaltered, labels, finalDf = clustering.cluster_initializer(rand_test_data)
 
 birchCluster(labels, principalDf)
+aggloCluster(labels, finalDf)
+EMCluster(labels, principalDf, True)
+gaussianCluster(labels, principalDf)
+"""
+
+
 

@@ -34,6 +34,6 @@ def naive_bayes_fun(pixelFile):
     print("Accuracy:", metrics.accuracy_score(y_test, y_prediction))
 
     # Confusion Matrix
-    print("Confusion Matrix:", metrics.confusion_matrix(y_test, y_prediction))
+    print("Confusion Matrix:\n", metrics.confusion_matrix(y_test, y_prediction))
 
 

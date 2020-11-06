@@ -1,3 +1,4 @@
+import math
 import matplotlib.pyplot as plt
 import sklearn
 from sklearn.cluster import KMeans
@@ -19,8 +20,23 @@ def cluster_initializer(file):
     return principalDf, unaltered, labels, finalDf
 
 
-def k_means_cluster(labels, principalDf):
-    k = KMeans(n_clusters=2, init="random", n_init=1, algorithm="full", max_iter=300, random_state=1).fit(principalDf)
+def k_means_cluster(labels, principalDf, optimal):
+
+    print("KMeans Starting ......")
+    Sum_of_squared_distances = []
+    K = range(2, 16)
+    if optimal:
+        for k in K:
+            km = KMeans(n_clusters=k, random_state=1).fit(principalDf)
+            Sum_of_squared_distances.append(math.floor(km.inertia_))
+
+        plt.plot(K, Sum_of_squared_distances, 'bx-')
+        plt.xlabel('k')
+        plt.ylabel('Sum_of_squared_distances')
+        plt.title('Elbow Method For Optimal KMeans k-clusters')
+        plt.show()
+
+    k = KMeans(n_clusters=10, init="random", n_init=1, max_iter=300, random_state=1).fit(principalDf)
     print(k.labels_)
 
     accuracy = sklearn.metrics.accuracy_score(k.labels_, labels)

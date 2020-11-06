@@ -34,6 +34,7 @@ naive_bayes.naive_bayes_fun(top5Pixels)
 naive_bayes.naive_bayes_fun(top10Pixels)
 naive_bayes.naive_bayes_fun(top20Pixels)
 
+
 # q7
 print("\n### Add classifier to the top pixel files ###\n")
 data_preparation.addClassifier(5)
@@ -45,11 +46,11 @@ data_preparation.addClassifier(20)
 principalDf, unaltered, labels, finalDf = clustering.cluster_initializer(rand_test_data)
 
 # q9
-# clustering.k_means_cluster(labels, principalDf)
+clustering.k_means_cluster(labels, principalDf, True)
 
 # q11
-hs_clustering.aggloCluster(labels, principalDf)
-# hs_clustering.EMCluster(labels, principalDf)
-# hs_clustering.gaussianCluster(labels, principalDf)
-# hs_clustering.birchCluster(labels, principalDf)
+hs_clustering.aggloCluster(labels, finalDf)
+hs_clustering.EMCluster(labels, principalDf, True)
+hs_clustering.gaussianCluster(labels, principalDf)
+hs_clustering.birchCluster(labels, principalDf)
 
