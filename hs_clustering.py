@@ -76,11 +76,12 @@ def gaussianCluster(labels, pca_file):
 #############################################################
 
 
-def EMCluster(labels, pca_file, optimal):
+def EMCluster(labels, pca_file, optimal, clusters):
     """
            Function that outputs a scatter plot of the Gaussian Mixture Cluster
 
            params:
+                clusters: number of clusters
                 labels : file
                     The classifier for the dataset
                 pca_file : file
@@ -108,7 +109,7 @@ def EMCluster(labels, pca_file, optimal):
         plt.show()
 
     # Run the KMeans cluster algorithm using 10 clusters.
-    km = KMeans(n_clusters=10, algorithm="full", random_state=1).fit(pca_file)
+    km = KMeans(n_clusters=clusters, algorithm="full", random_state=1).fit(pca_file)
     # Print the cluster labels
     print(km.labels_)
     # Print the accuracy of cluster labels compared to the classifier labels.
@@ -127,13 +128,13 @@ def EMCluster(labels, pca_file, optimal):
 
 def birchCluster(labels, pca_file):
     """
-           Function that outputs a scatter plot of the Gaussian Mixture Cluster
+       Function that outputs a scatter plot of the Gaussian Mixture Cluster
 
-           params:
-                labels : file
-                    The classifier for the dataset
-                pca_file : file
-                    The dataset
+       params:
+            labels : file
+                The classifier for the dataset
+            pca_file : file
+                The dataset
     """
 
     print("Birch starting .....")

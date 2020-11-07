@@ -26,9 +26,10 @@ def cluster_initializer(file):
     return pca_file, unaltered, labels, full_pca_file
 
 
-def k_means_cluster(labels, pca_file, optimal):
+def k_means_cluster(labels, pca_file, optimal, clusters):
     """
     outputs a KMeans cluster scatter plot
+    :param clusters: number of clusters
     :param labels: classifiers
     :param pca_file: reduced data set
     :param optimal: takes in boolean and outputs optimal number of clusters.
@@ -48,7 +49,7 @@ def k_means_cluster(labels, pca_file, optimal):
         plt.show()
 
     # KMeans clustering on the reduced dataset
-    k = KMeans(n_clusters=10, init="random", n_init=1, max_iter=300, random_state=1).fit(pca_file)
+    k = KMeans(n_clusters=clusters, init="random", n_init=1, max_iter=300, random_state=1).fit(pca_file)
     print(k.labels_)
     # accuracy between cluster labels and the original dataset classifiers.
     accuracy = sklearn.metrics.accuracy_score(k.labels_, labels)

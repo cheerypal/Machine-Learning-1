@@ -48,13 +48,14 @@ pca_file, unaltered, labels, full_pca_file = clustering.cluster_initializer(rand
 
 # q9 - KMeans cluster with optimal cluster finder
 print("\n### KMeans Clusters with KMeans with Optimal Cluster Finder ###\n")
-clustering.k_means_cluster(labels, pca_file, True)
+clustering.k_means_cluster(labels, pca_file, True, 4)
+
 
 # q11 - Cluster Algorithms Used
 print("\n### Hard and Soft Clustering Techniques ###\n")
 hs_clustering.aggloCluster(labels, full_pca_file)
 # EM cluster with optimal clustering
-hs_clustering.EMCluster(labels, pca_file, True)
+hs_clustering.EMCluster(labels, pca_file, True, 4)
 hs_clustering.gaussianCluster(labels, pca_file)
 hs_clustering.birchCluster(labels, pca_file)
 
