@@ -19,18 +19,19 @@ top20Pixels = "top_pixels/top20pixels.csv"
 #############################################################
 
 
-def aggloCluster(labels, pca_file):
+def aggloCluster(labels, pca_file, clusters):
     """
     Function that outputs a scatter plot of the Agglomerative Cluster
 
     params:
+        clusters : number of clusters
         labels : file
             The classifier for the dataset
         pca_file : file
             The dataset
     """
     print("Agglomerative is starting ....")
-    agglo = AgglomerativeClustering(n_clusters=10).fit(pca_file)
+    agglo = AgglomerativeClustering(n_clusters=clusters).fit(pca_file)
     print("globb!")
     # agglo cluster labels.
     print(agglo.labels_)
@@ -48,18 +49,19 @@ def aggloCluster(labels, pca_file):
 #############################################################
 
 
-def gaussianCluster(labels, pca_file):
+def gaussianCluster(labels, pca_file, clusters):
     """
        Function that outputs a scatter plot of the Gaussian Mixture Cluster
 
        params:
+        clusters : number of clusters
         labels : file
             The classifier for the dataset
         pca_file : file
             The dataset
     """
     print("Gaussian is starting ....")
-    gaus = GaussianMixture(n_components=10).fit_predict(pca_file)
+    gaus = GaussianMixture(n_components=clusters).fit_predict(pca_file)
     # Print the cluster labels
     print(gaus)
     print(accuracy_score(gaus, labels))
@@ -126,11 +128,12 @@ def EMCluster(labels, pca_file, optimal, clusters):
 ###########################################################
 
 
-def birchCluster(labels, pca_file):
+def birchCluster(labels, pca_file, clusters):
     """
        Function that outputs a scatter plot of the Gaussian Mixture Cluster
 
        params:
+            clusters: number of clusters
             labels : file
                 The classifier for the dataset
             pca_file : file
@@ -139,7 +142,7 @@ def birchCluster(labels, pca_file):
 
     print("Birch starting .....")
     # Run the birch cluster algo
-    brch = Birch(n_clusters=10).fit(pca_file)
+    brch = Birch(n_clusters=clusters).fit(pca_file)
     # Print the birch cluster labels.
     print(brch.labels_)
     # Print the birch sub-cluster labels.

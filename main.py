@@ -53,9 +53,9 @@ clustering.k_means_cluster(labels, pca_file, True, 4)
 
 # q11 - Cluster Algorithms Used
 print("\n### Hard and Soft Clustering Techniques ###\n")
-hs_clustering.aggloCluster(labels, full_pca_file)
+hs_clustering.aggloCluster(labels, full_pca_file, 4)
 # EM cluster with optimal clustering
 hs_clustering.EMCluster(labels, pca_file, True, 4)
-hs_clustering.gaussianCluster(labels, pca_file)
-hs_clustering.birchCluster(labels, pca_file)
+hs_clustering.gaussianCluster(labels, pca_file, 4)
+hs_clustering.birchCluster(labels, pca_file, 4)
 
