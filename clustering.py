@@ -35,14 +35,15 @@ def k_means_cluster(labels, pca_file, optimal, clusters):
     :param optimal: takes in boolean and outputs optimal number of clusters.
     """
     print("KMeans Starting ......")
-    Sum_of_squared_distances = []
+    inertiaVals = []
+    # Section calculates the optimal number of pixel and plots an elbow curve
     K = range(2, 16)
     if optimal:
         for k in K:
             km = KMeans(n_clusters=k, random_state=1).fit(pca_file)
-            Sum_of_squared_distances.append(math.floor(km.inertia_))
+            inertiaVals.append(math.floor(km.inertia_))
 
-        plt.plot(K, Sum_of_squared_distances, 'bx-')
+        plt.plot(K, inertiaVals, 'bx-')
         plt.xlabel('k')
         plt.ylabel('Sum_of_squared_distances')
         plt.title('Elbow Method For Optimal KMeans k-clusters')
@@ -50,10 +51,11 @@ def k_means_cluster(labels, pca_file, optimal, clusters):
 
     # KMeans clustering on the reduced dataset
     k = KMeans(n_clusters=clusters, init="random", n_init=1, max_iter=300, random_state=1).fit(pca_file)
+    print("Cluster labels:")
     print(k.labels_)
     # accuracy between cluster labels and the original dataset classifiers.
     accuracy = sklearn.metrics.accuracy_score(k.labels_, labels)
-    print(accuracy)
+    print("Accuracy: " + str(accuracy))
     colors = ["blue", "orange", "green", "red", "purple",
               "brown", "pink", "grey", "yellow", "cyan"]
 

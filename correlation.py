@@ -27,10 +27,13 @@ def init_correlation():
         data = pandas.concat([data, labels], axis=1)
 
     # print full data table with all the classifier files were concatenated
+    print("Current Data\n")
     print(data)
     # Get the absolute correlation values of the data
     print("Correlating Data .......")
     correlation = abs(data.corr())
+    print("Correlation Data\n")
+    print(correlation)
     return correlation, data
 
 
@@ -55,7 +58,7 @@ def runCorrelation(pixels, corr, data):
         # Get the pixel numbers
         sortedCorr = sortedCorr[0:pixels].index
         pixARR = sortedCorr.values.tolist()
-        print("#### " + ARR[x] + " ####")
+        print("#### Top Pixels For" + ARR[x] + " ####")
         pandas.array(sortedCorr)
         sortedPix = []
         # print the pixel numbers

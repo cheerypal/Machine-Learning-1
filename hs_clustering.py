@@ -34,8 +34,9 @@ def aggloCluster(labels, pca_file, clusters):
     agglo = AgglomerativeClustering(n_clusters=clusters).fit(pca_file)
     print("globb!")
     # agglo cluster labels.
+    print("Cluster labels:")
     print(agglo.labels_)
-    print(accuracy_score(agglo.labels_, labels))
+    print("Accuracy: " + str(accuracy_score(agglo.labels_, labels)))
     colors = ["blue", "orange", "green", "red", "purple",
               "brown", "pink", "grey", "yellow", "cyan"]
     # populate the scatter plot
@@ -63,8 +64,9 @@ def gaussianCluster(labels, pca_file, clusters):
     print("Gaussian is starting ....")
     gaus = GaussianMixture(n_components=clusters).fit_predict(pca_file)
     # Print the cluster labels
+    print("Cluster labels:")
     print(gaus)
-    print(accuracy_score(gaus, labels))
+    print("Accuracy: " + str(accuracy_score(gaus, labels)))
     colors = ["blue", "orange", "green", "red", "purple",
               "brown", "pink", "grey", "yellow", "cyan"]
     # Plot the scatter plot.
@@ -94,17 +96,17 @@ def EMCluster(labels, pca_file, optimal, clusters):
 
     print("EM starting .....")
     # List of inertia's
-    Sum_of_squared_distances = []
-    # Range of clusters
+    inertiaVals = []
+    # Section calculates the optimal number of pixel and plots an elbow curve
     K = range(2, 16)
     # Find the optimal number of clusters
     if optimal:
         for k in K:
             km = KMeans(n_clusters=k, algorithm="full", random_state=1).fit(pca_file)
-            Sum_of_squared_distances.append(math.floor(km.inertia_))
+            inertiaVals.append(math.floor(km.inertia_))
 
         # Plot the elbow curve for optimal clusters.
-        plt.plot(K, Sum_of_squared_distances, 'bx-')
+        plt.plot(K, inertiaVals, 'bx-')
         plt.xlabel('k')
         plt.ylabel('Sum_of_squared_distances')
         plt.title('Elbow Method For Optimal EM k-clusters')
@@ -113,9 +115,10 @@ def EMCluster(labels, pca_file, optimal, clusters):
     # Run the KMeans cluster algorithm using 10 clusters.
     km = KMeans(n_clusters=clusters, algorithm="full", random_state=1).fit(pca_file)
     # Print the cluster labels
+    print("Cluster labels:")
     print(km.labels_)
     # Print the accuracy of cluster labels compared to the classifier labels.
-    print(accuracy_score(km.labels_, labels))
+    print("Accuracy: " + str(accuracy_score(km.labels_, labels)))
     colors = ["blue", "orange", "green", "red", "purple",
               "brown", "pink", "grey", "yellow", "cyan"]
     # Plot the scatter plot
@@ -144,11 +147,13 @@ def birchCluster(labels, pca_file, clusters):
     # Run the birch cluster algo
     brch = Birch(n_clusters=clusters).fit(pca_file)
     # Print the birch cluster labels.
+    print("Cluster labels:")
     print(brch.labels_)
     # Print the birch sub-cluster labels.
+    print("Sub-cluster labels:")
     print(brch.subcluster_labels_)
     # Print the accuracy of cluster labels compared to the classifier labels.
-    print(accuracy_score(brch.labels_, labels))
+    print("Accuracy: " + str(accuracy_score(brch.labels_, labels)))
     colors = ["blue", "orange", "green", "red", "purple",
               "brown", "pink", "grey", "yellow", "cyan"]
     # Plot the scatter plot
