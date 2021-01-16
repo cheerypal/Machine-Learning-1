@@ -25,7 +25,6 @@ Classifiers being used on the datasets from question 5 (all on the training sets
 | Top20Pixels | TAN | n/a |
 | Top20Pixels | HillClimber | n/a |
 
-# change
 
 
 
